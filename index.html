@@ -1,0 +1,614 @@
+<!doctype html>
+<html class="no-js" lang="ja" dir="ltr">
+  <head>      
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>誰でも演奏できるくん</title>
+    <script src="jquery/jquery-1.9.1.js?0.5.2"></script>
+    <script src="jquery/jquery.hammer.js?0.5.2"></script>
+    <script src="lightgl.js"></script>
+    <script src="csg.js?0.5.2"></script>
+    <script src="formats.js?0.5.2"></script>
+    <script src="openjscad.js?0.5.2"></script>
+    <script src="openscad.js?0.5.2"></script>
+    <script src="js/jscad-worker.js?0.5.2" charset="utf-8"></script>
+    <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
+    <script>
+        var itidodake = true;
+        var start = false;
+        var kidou = false;
+
+        function zyunbi(){
+            itidodake = true;                            
+            document.getElementById("statusbuttons").children[2].click();            
+        }
+
+        var kesu =          
+            setInterval(function(){            
+                if(start){
+                    document.getElementById("mokkin_stl").style.display = "none";
+                    kidou = true;
+                }
+            }, 0);
+        function tukeru_kesu(){
+            if(kidou){
+                mokkin_play();
+                clearInterval(kesu);
+                document.getElementById("mokkin_stl").style.display = "";
+                document.getElementById("saisei").style.display = "none";
+                document.getElementById("speed").style.display = "none";
+                document.getElementById("kyouyuu").style.display = "none";                
+                kidou = false;
+            }else{
+                kesu =          
+                    setInterval(function(){            
+                        if(start){                        
+                            document.getElementById("mokkin_stl").style.display = "none";
+                            document.getElementById("saisei").style.display = "";                            
+                            document.getElementById("speed").style.display = "";                            
+                            document.getElementById("kyouyuu").style.display = "";                            
+                            kidou = true;
+                        }
+                    }, 0);
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/foundation.css">
+    <style>
+    .top_center_text {
+        font-weight: bold;
+        line-height: 1;
+        color: inherit;        
+    }
+
+    .bottom {
+        margin-bottom: 0;
+        bottom: 0;
+        position: fixed;
+        width: 100%;
+        height: 50px;
+    }
+
+    body {
+        background-color: #F1F0EE;
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        margin-bottom: 0px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    .top-bar {
+       text-align: center;        
+       background-color: #333333;
+       color: #F1F0EE;
+    }
+    li {
+       background-color: #333333;        
+       color: #F1F0EE;       
+    }
+    .button {
+        background-color: #1253A4;
+        color: #F1F0EE;
+    }
+    span {
+       background-color: #333333;        
+       color: #F1F0EE;       
+    }
+    canvas {left:0;}
+    </style>
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/8.mp3" type="audio/mp3">
+    </audio>
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/7.mp3" type="audio/mp3">
+    </audio>
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/6.mp3" type="audio/mp3">
+    </audio>
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/5.mp3" type="audio/mp3">
+    </audio>
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/4.mp3" type="audio/mp3">
+    </audio>
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/3.mp3" type="audio/mp3">
+    </audio>
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/2.mp3" type="audio/mp3">
+    </audio>    
+    <audio class="piano" controls preload="auto" hidden>
+        <source src="audio/1.mp3" type="audio/mp3">
+    </audio>
+    <script src="./js/p5.min.js"></script>
+    <script>
+        function stl_kirikae(){
+            $('#mokkin_stl').fadeIn(2000);
+        }    
+    </script>
+    <script id="gakuhu_make">
+        var gakuhu = [];
+        var kousi_w,kousi_h;
+        var mouseDragged_flag = false;
+        var doremi = ['ド','シ','ラ','ソ','ファ','ミ','レ','ド'];
+        var mokkin_doremi = ['ト','シ','ラ','ソ','フ','ミ','レ','ド'];
+        var renzoku;
+        var page = 0;
+        var audio = document.getElementsByClassName("piano");
+        var renzoku_hantei_x = -1;
+        var renzoku_hantei_y = -1;
+        var saisei_doremi = [];
+        var saisei_flag=false;
+        function setup() {
+            var ua = navigator.userAgent;
+            if(ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0){
+                //alert("スマホ");
+                kousi_w = 5;
+                kousi_h = 8;
+            }else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
+                //alert("タブレット");
+                kousi_w = 9;
+                kousi_h = 8;
+            }else{
+                //alert("PC");
+                kousi_w = 9;
+                kousi_h = 8;
+            }
+            for(var i=0; i<18+(9-kousi_w); i++){
+                gakuhu[i] = [];            
+                saisei_doremi[i] = [];
+            }
+
+            createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
+            for(var i=0; i<gakuhu.length; i++){
+                for(var y=0; y<kousi_h; y++){
+                    gakuhu[i][y] = [];
+                    for(var x=0; x<kousi_w; x++){
+                        gakuhu[i][y][x] = false;
+                    }
+                }
+            }
+            var result = {};
+            if( 1 < window.location.search.length )
+            {
+                // 最初の1文字 (?記号) を除いた文字列を取得する
+                var query = window.location.search.substring( 1 );
+
+                // クエリの区切り記号 (&) で文字列を配列に分割する
+                var parameters = query.split( '&' );
+
+                for( var i = 0; i < parameters.length; i++ )
+                {
+                    // パラメータ名とパラメータ値に分割する
+                    var element = parameters[ i ].split( '=' );
+
+                    var paramName = decodeURIComponent( element[ 0 ] );
+                    var paramValue = decodeURIComponent( element[ 1 ] );
+
+                    result[i] = paramValue;
+                }
+                if(parameters.length == 18){
+                    document.getElementsByClassName('top_center_text')[0].innerHTML = result[0];
+                    document.getElementById("speed").value = result[1];
+                    for(var i=2; i<10; i++){
+                        if(result[i] != "")gakuhu[0][result[i]][i-1] = true;
+                    }
+
+                    for(var i=1; i<9; i++){
+                        if(result[i+9] != "")gakuhu[i][result[i+9]][8] = true;
+                    }
+                }                
+            }
+        }
+        
+
+        function page_next() {
+            page++;
+            for(var y=0; y<kousi_h; y++){
+                for(var x=2; x<kousi_w; x++){
+                    gakuhu[page][y][x-1] = gakuhu[page-1][y][x];
+                }
+            }
+        }
+
+        function page_prev() {
+            page--;            
+            for(var y=0; y<kousi_h; y++){
+                for(var x=1; x<kousi_w-1; x++){
+                    gakuhu[page][y][x+1] = gakuhu[page+1][y][x];
+                }
+            }
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
+        }
+
+        function draw() {
+            //document.getElementById("statusbuttons").children[2];
+            background(241,240,238);
+            fill(255,212,100);
+            rect(0,0,(width/kousi_w),height);
+            //stroke(18,83,164,255);
+            //横線
+            stroke(18,83,164,255*0.3);            
+            for(var i=0; i<kousi_h; i++){
+                line(0,(height/kousi_h)*i,width,(height/kousi_h)*i);
+            }
+            //縦線
+            stroke(18,83,164,255);            
+            for(var i=0; i<kousi_w; i++){
+                line((width/kousi_w)*i,0,(width/kousi_w)*i,height);
+            }
+            //中央に点
+            /*
+            fill(18,83,164,255);
+            for(var i=0; i<kousi_h; i++){
+                for(var j=0; j<kousi_w; j++){
+                    ellipse((width/kousi_w)*i + ((width/kousi_w)/2),(height/kousi_h)*j+ ((height/kousi_h)/2),3,3);
+                }
+            } 
+            */           
+
+            //赤い四角とドレミファソラシドを書くよ
+            for(var y=0; y<kousi_h; y++){
+                for(var x=0; x<kousi_w; x++){
+                    fill(51,51,51,255);
+                    noStroke();
+                    if(x == 0){
+                        var tiisaaihou1,tiisaaihou2,tiisize;
+                        if(width < height)tiisaaihou1 = width;
+                        tiisaaihou1 = height;
+                        if(kousi_w < kousi_h)tiisaaihou2 = kousi_w;
+                        else tiisaaihou2 = kousi_h;
+                        tiisize = (tiisaaihou1/tiisaaihou2)/4;
+
+                        textSize(tiisize);
+                        if(y != 4)
+                        text(doremi[y],(width/kousi_w)*x + ((width/kousi_w)/2)-(tiisize/2),(height/kousi_h)*(y+1) - (((height/kousi_h)-(tiisize*0.5))*0.5));
+                        else
+                        text(doremi[y],(width/kousi_w)*x + ((width/kousi_w)/2)-(tiisize),(height/kousi_h)*(y+1) - (((height/kousi_h)-(tiisize*0.5))*0.5));
+                    }else{
+                        if(gakuhu[page][y][x]){
+                            fill(242,105,100);
+                            noStroke();
+                            if(saisei_flag && page + x > 16)fill(0,0,0);
+                            //triangle((width/kousi_w)*x,(height/kousi_h)*y,(width/kousi_w)*x + (width/kousi_w),(height/kousi_h)*y,((width/kousi_w)*x + (width/kousi_w))/2,((height/kousi_h)*y + (height/kousi_h)/2));
+                            //ellipse((width/kousi_w)*x-((width/kousi_w)/2),(height/kousi_h)*y-((height/kousi_h)/2),100,100);
+                            rect((width/kousi_w)*x,(height/kousi_h)*y,(width/kousi_w),(height/kousi_h));
+                        }
+                    }
+                }
+            }
+        }
+
+        //譜面入力
+        function mouseClicked() {
+            if(!mouseDragged_flag && !saisei_flag){
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=1; x<kousi_w; x++){
+                        if(mouseY >= (height/kousi_h)*y && mouseY <= (height/kousi_h)*(y+1)){
+                            if(mouseX >= (width/kousi_w)*x && mouseX <= (width/kousi_w)*(x+1)){
+                                if(!gakuhu[page][y][x])for(var i=0; i<kousi_h; i++)gakuhu[page][i][x] = false;                            
+                                gakuhu[page][y][x] = !gakuhu[page][y][x];
+                                if(gakuhu[page][y][x]){
+                                    audio[y].currentTime = 0;
+                                    audio[y].play();
+                                    saisei_doremi[page][x] = y;                                    
+                                }else{
+                                    saisei_doremi[page][x] = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            mouseDragged_flag = false;
+        }
+
+        function mouseDragged() {
+            if(!saisei_flag){            
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=1; x<kousi_w; x++){
+                        if(mouseY >= (height/kousi_h)*y && mouseY <= (height/kousi_h)*(y+1)){
+                            if(mouseX >= (width/kousi_w)*x && mouseX <= (width/kousi_w)*(x+1)){
+                                for(var i=0; i<kousi_h; i++)gakuhu[page][i][x] = false;
+                                gakuhu[page][y][x] = !gakuhu[page][y][x];
+                                mouseDragged_flag = true;
+                                if(renzoku_hantei_y != y || renzoku_hantei_x != x){
+                                    audio[y].currentTime = 0;
+                                    audio[y].play();
+                                    saisei_doremi[page][x] = y;
+                                }
+                                renzoku_hantei_x = x;
+                                renzoku_hantei_y = y;   
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        var musicplayer;
+
+        function _music_play(num){
+            page = num;
+            if(page > 0){
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=2; x<kousi_w; x++){
+                        gakuhu[page][y][x-1] = gakuhu[page-1][y][x];
+                        if(page + x > 16){
+                            gakuhu[page][y][x] = true;
+                        }
+                    }
+                }
+                if(page != 17){
+                    for(var y=0; y<kousi_h; y++){
+                        if(gakuhu[page-1][y][1]){
+                            audio[y].pause();
+                            audio[y].currentTime = 0;
+                            audio[y].play();
+                        }
+                    }
+                }
+            }            
+            /*
+            if(saisei_doremi[num1][num2] != null){
+                audio[saisei_doremi[num1][num2]].pause();
+                audio[saisei_doremi[num1][num2]].currentTime = 0;
+                audio[saisei_doremi[num1][num2]].play();
+            }
+            */
+            /*
+            for(var i=0; i<gakuhu.length; i++){
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=0; x<kousi_w; x++){
+                        if(gakuhu[i][y][x]){
+                            audio[saisei_doremi[num1][num2]].pause();
+                            audio[saisei_doremi[num1][num2]].currentTime = 0;
+                            audio[saisei_doremi[num1][num2]].play();
+                        }
+                    }
+                }
+            } 
+            */
+            num++;
+            if(page < 17){
+                musicplayer = setTimeout(function() {_music_play(num);}, 1100 - document.getElementById("speed").value );
+            }else{
+                saisei_flag = false;
+                page=0;
+            }
+        }
+
+        function music_play(){
+            while(page>0){
+                page--;            
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=1; x<kousi_w-1; x++){
+                        gakuhu[page][y][x+1] = gakuhu[page+1][y][x];
+                    }
+                }                
+            }
+            saisei_flag = !saisei_flag;
+            if(saisei_flag){
+                for(var i=0; i<audio.length; i++){
+                    audio[i].pause();
+                    audio[i].currentTime = 0;
+                }
+                _music_play(0);
+            }else{
+                for(var i=0; i<audio.length; i++){
+                    audio[i].pause();
+                    audio[i].currentTime = 0;
+                    clearTimeout(musicplayer);
+                }
+            }
+        }
+
+        function _mokkin_play(num){
+            page = num;
+            if(page > 0){
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=2; x<kousi_w; x++){
+                        gakuhu[page][y][x-1] = gakuhu[page-1][y][x];
+                        if(page + x > 16){
+                            gakuhu[page][y][x] = true;
+                        }
+                    }
+                }
+                arukadouka = false;
+                if(page != 17){
+                    for(var y=0; y<kousi_h; y++){
+                        if(gakuhu[page-1][y][1]){
+                            renzoku += mokkin_doremi[y];
+                            arukadouka = true;
+                        }
+                    }
+                    if(!arukadouka)renzoku += "休";
+                }
+            }            
+            /*
+            if(saisei_doremi[num1][num2] != null){
+                audio[saisei_doremi[num1][num2]].pause();
+                audio[saisei_doremi[num1][num2]].currentTime = 0;
+                audio[saisei_doremi[num1][num2]].play();
+            }
+            */
+            /*
+            for(var i=0; i<gakuhu.length; i++){
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=0; x<kousi_w; x++){
+                        if(gakuhu[i][y][x]){
+                            audio[saisei_doremi[num1][num2]].pause();
+                            audio[saisei_doremi[num1][num2]].currentTime = 0;
+                            audio[saisei_doremi[num1][num2]].play();
+                        }
+                    }
+                }
+            } 
+            */
+            num++;
+            if(page < 17){
+                mokkinplayer = setTimeout(function() {_mokkin_play(num);}, 0 );
+            }else{
+                saisei_flag = false;
+                page=0;
+                document.getElementsByName( "onkai" )[0].value = renzoku;
+                document.getElementById('updateButton').click();
+            }
+        }
+
+        function mokkin_play(){
+            renzoku = "";
+            while(page>0){
+                page--;            
+                for(var y=0; y<kousi_h; y++){
+                    for(var x=1; x<kousi_w-1; x++){
+                        gakuhu[page][y][x+1] = gakuhu[page+1][y][x];
+                    }
+                }                
+            }
+            saisei_flag = !saisei_flag;
+            if(saisei_flag){
+                for(var i=0; i<audio.length; i++){
+                    audio[i].pause();
+                    audio[i].currentTime = 0;
+                }
+                _mokkin_play(0);
+            }else{
+                for(var i=0; i<audio.length; i++){
+                    audio[i].pause();
+                    audio[i].currentTime = 0;
+                    clearTimeout(mokkinplayer);
+                }
+            }
+        }
+
+        function kyouyuu(){
+             var urladd = location.protocol + '//' + location.host + location.pathname + '?' +
+            'n=' + document.getElementsByClassName('top_center_text')[0].innerHTML +
+            '&s=' + document.getElementById("speed").value;
+            var i=0;            
+            for(var j=1; j<9; j++){
+                i=0;
+                for(i; i<8; i++){
+                    if(gakuhu[0][i][j])break;
+                }
+                if(i!=8)urladd += '&o=' + i;
+                else urladd += '&o=';
+            }
+            for(var j=1; j<9; j++){
+                i=0;
+                for(i; i<8; i++){
+                    if(gakuhu[j][i][8])break;
+                }
+                if(i!=8)urladd += '&o=' + i;
+                else urladd += '&o=';
+            }            
+            alert(urladd);
+        }
+    </script>
+  </head>
+  <body onload="loadProcessor()">
+    <div class="top-bar">
+        <span class="top_center_text" onclick="document.getElementsByClassName('top_center_text')[0].innerHTML = window.prompt('曲名を入力してください',''); if(document.getElementsByClassName('top_center_text')[0].innerHTML == '')document.getElementsByClassName('top_center_text')[0].innerHTML='ななし'">誰でも演奏できるくん</span>
+    <div class="top-bar-left">
+        <a href="#" id="prev" class="button" onclick="page_prev()">＜</a>        
+    </div>        
+    <div class="top-bar-right">
+        <a href="#" id="next" class="button" onclick="page_next()">＞</a>
+    </div>    
+    </div>
+
+    <div class="top-bar bottom">
+        <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
+        <input type="range" id="speed" step="1" min="100" max="1000">
+        <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">楽器作成</a>
+        <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">共有</a>                
+        <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
+    </div>
+    <script>
+        setInterval(function(){
+            if(page<=0)document.getElementById("prev").style.visibility="hidden";
+            else document.getElementById("prev").style.visibility="visible";
+            if(page>=8+(9-kousi_w))document.getElementById("next").style.visibility="hidden";
+            else document.getElementById("next").style.visibility="visible";
+            if(saisei_flag)document.getElementById("saisei").innerHTML = "停止";
+            else document.getElementById("saisei").innerHTML = "再生";
+            if(document.getElementById("mokkin_stl").style.display == ""){
+                document.getElementById("gakuhumake").innerHTML = "楽譜作成";
+                document.getElementById("daunroad").style.display = "";                
+            }else{
+                document.getElementById("gakuhumake").innerHTML = "楽器作成";                
+                document.getElementById("daunroad").style.display = "none";                                
+            }
+            if(document.getElementsByClassName("downloadOutputFileLink")[0].href!="" && itidodake){
+                //document.getElementById("daunroad").innerHTML = "ダウンロード";
+                document.getElementsByClassName("downloadOutputFileLink")[0].click();
+                itidodake = false;
+                //document.getElementById("daunroad").href = document.getElementsByClassName("downloadOutputFileLink")[0].href;
+            }else{
+                document.getElementById("daunroad").innerHTML = "ダウンロード";                
+            }
+        },0);
+    </script>
+<div id="mokkin_stl">
+    <!-- setup display of the errors as required by OpenJSCAD.js -->
+  <div class="jscad-container">
+    <div id="header">
+    </div>
+
+<!-- setup display of the viewer, i.e. canvas -->
+    <div oncontextmenu="return false;" id="viewerContext" style="height: 100vh;"></div>
+
+<!-- setup display of the design parameters, as required by OpenJSCAD.js -->
+<!-- set display: block to display this -->
+    <div id="parametersdiv" style="visibility:hidden"></div>
+
+<!-- setup display of the status, as required by OpenJSCAD.js -->
+<!-- set display: block to display this -->
+    <div id="tail">
+      <div id="statusdiv"></div>
+    </div>
+  </div>
+
+<!-- define the design and the parameters -->
+  <script type="text/javascript">
+    var gProcessor = null;        // required by OpenJScad.org
+
+    var gComponents = [ { file: 'mokkin.jscad' } ];
+
+    function loadProcessor() {
+      gProcessor = new OpenJsCad.Processor(document.getElementById("viewerContext"));
+
+      loadJSCAD(0);
+    }
+
+    function loadJSCAD(choice) {
+      var filepath = gComponents[choice].file;
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", filepath, true);
+      gProcessor.setStatus("Loading "+filepath+" <img id=busy src='imgs/busy.gif'>");
+
+      xhr.onload = function() {
+        var source = this.responseText;
+        //console.log(source);
+
+        if(filepath.match(/\.jscad$/i)||filepath.match(/\.js$/i)) {
+          gProcessor.setStatus("Processing "+filepath+" <img id=busy src='imgs/busy.gif'>");
+          gProcessor.setJsCad(source,filepath);
+        }
+      }
+      xhr.send();
+      start = true;
+    }    
+  </script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/foundation.min.js"></script>
+  </body>
+</html>
