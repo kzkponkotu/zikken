@@ -214,10 +214,6 @@
                     }
                 } 
             }
-            for(var i=0; i<audio.length; i++){
-                audio[i].currentTime = 0;
-                audio[i].play();                    
-            }
         }
         
 
@@ -244,6 +240,12 @@
         }
 
         function draw() {
+            if(frameCount == 100){
+                for(var i=0; i<audio.length; i++){
+                    audio[i].currentTime = 0;
+                    audio[i].play();                    
+                }
+            }
             //document.getElementById("statusbuttons").children[2];
             background(241,240,238);
             fill(255,212,100);
