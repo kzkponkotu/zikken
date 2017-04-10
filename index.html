@@ -32,6 +32,8 @@
                 }
             }, 0);
         function tukeru_kesu(){
+            if(document.getElementById("daunroad").style.display == "none")document.getElementById("daunroad").style.display = "";
+            else document.getElementById("daunroad").style.display = "none";
             if(kidou){
                 mokkin_play();
                 clearInterval(kesu);
@@ -165,6 +167,8 @@
             }
 
             createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
+            document.getElementById("defaultCanvas0").style.position = "relative";            
+            document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";
             for(var i=0; i<gakuhu.length; i++){
                 for(var y=0; y<kousi_h; y++){
                     gakuhu[i][y] = [];
@@ -238,6 +242,8 @@
 
         function windowResized() {
             resizeCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
+            document.getElementById("defaultCanvas0").style.position = "relative";            
+            document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";
         }
 
         function draw() {
@@ -528,7 +534,7 @@
     </script>
   </head>
   <body onload="loadProcessor()">
-    <div class="top-bar">
+    <div class="top-bar" style="position: absolute;top: 0;">
         <span class="top_center_text button" style="width: 50%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" onclick="var str = window.prompt('曲名を入力してください',''); if(str != '' && str != null)document.getElementsByClassName('top_center_text')[0].innerHTML=escape_html(str);">タイトル</span>
         <a href="#" id="next" class="button" onclick="page_next()" style="float: right">＞</a>
         <a href="#" id="prev" class="button" onclick="page_prev()" style="float: left">＜</a>                
@@ -566,10 +572,10 @@
             else document.getElementById("saisei").innerHTML = "再生";
             if(document.getElementById("mokkin_stl").style.display == ""){
                 document.getElementById("gakuhumake").innerHTML = "楽譜";
-                document.getElementById("daunroad").style.display = "";                
+                //document.getElementById("daunroad").style.display = "";                
             }else{
                 document.getElementById("gakuhumake").innerHTML = "楽器";                
-                document.getElementById("daunroad").style.display = "none";                                
+                //document.getElementById("daunroad").style.display = "none";                                
             }
             if(document.getElementsByClassName("downloadOutputFileLink")[0].href!="" && itidodake){
                 //document.getElementById("daunroad").innerHTML = "ダウンロード";
@@ -579,8 +585,7 @@
             }else{
                 document.getElementById("daunroad").innerHTML = "ダウンロード";                
             }
-        },0);
-        document.getElementById("daunroad").style.display = "none";                                        
+        },0); 
     </script>
 <div id="mokkin_stl">
     <!-- setup display of the errors as required by OpenJSCAD.js -->
