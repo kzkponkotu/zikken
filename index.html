@@ -240,15 +240,6 @@
         }
 
         function draw() {
-            if(frameCount == 100){
-                alert(audio.length);
-                for(var i=0; i<audio.length; i++){
-                    audio[i].pause();
-                    audio[i].currentTime = 0;
-                    audio[i].play();                    
-                }
-                alert(audio.length);                
-            }
             //document.getElementById("statusbuttons").children[2];
             background(241,240,238);
             fill(255,212,100);
@@ -308,6 +299,11 @@
 
         //譜面入力
         function mouseClicked() {
+            for(var i=0; i<audio.length; i++){
+                audio[i].pause();
+                audio[i].currentTime = 0;
+                audio[i].play();                    
+            }            
             if(!mouseDragged_flag && !saisei_flag){
                 for(var y=0; y<kousi_h; y++){
                     for(var x=1; x<kousi_w; x++){
