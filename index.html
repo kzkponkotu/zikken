@@ -240,11 +240,6 @@
         }
 
         function draw() {
-            if(frameCount == 100){
-                audio[7].pause();
-                audio[7].currentTime = 0;
-                audio[7].play();                    
-            }
             //document.getElementById("statusbuttons").children[2];
             background(241,240,238);
             fill(255,212,100);
@@ -402,6 +397,7 @@
         }
 
         function music_play(){
+            for(var i=0; i<audio.length; i++)audio[i].load();
             while(page>0){
                 page--;            
                 for(var y=0; y<kousi_h; y++){
