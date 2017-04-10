@@ -242,6 +242,7 @@
         function draw() {
             if(frameCount == 100){
                 for(var i=0; i<audio.length; i++){
+                    audio[i].pause();
                     audio[i].currentTime = 0;
                     audio[i].play();                    
                 }
