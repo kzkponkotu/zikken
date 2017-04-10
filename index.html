@@ -528,9 +528,9 @@
   </head>
   <body onload="loadProcessor()">
     <div class="top-bar">
-        <a href="#" id="prev" class="button" onclick="page_prev()" style="float: left">＜</a>        
-        <span class="top_center_text button" onclick="document.getElementsByClassName('top_center_text')[0].innerHTML = window.prompt('曲名を入力してください',''); if(document.getElementsByClassName('top_center_text')[0].innerHTML == '')document.getElementsByClassName('top_center_text')[0].innerHTML='ななし'">タイトル</span>
+        <span class="top_center_text button" style="width: 50%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" onclick="var str = window.prompt('曲名を入力してください',''); if(str != '' && str != null)document.getElementsByClassName('top_center_text')[0].innerHTML=escape_html(str);">タイトル</span>
         <a href="#" id="next" class="button" onclick="page_next()" style="float: right">＞</a>
+        <a href="#" id="prev" class="button" onclick="page_prev()" style="float: left">＜</a>                
     </div>
 
     <div class="top-bar bottom">
@@ -541,6 +541,21 @@
         <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
     </div>
     <script>
+        function escape_html(string) {
+            if(typeof string !== 'string') {
+                return string;
+            }
+            return string.replace(/[&'`"<>]/g, function(match) {
+                return {
+                '&': '&amp;',
+                "'": '&#x27;',
+                '`': '&#x60;',
+                '"': '&quot;',
+                '<': '&lt;',
+                '>': '&gt;',
+                }[match]
+            });
+        }
         setInterval(function(){
             if(page<=0)document.getElementById("prev").style.visibility="hidden";
             else document.getElementById("prev").style.visibility="visible";
