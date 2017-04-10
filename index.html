@@ -65,9 +65,8 @@
     .bottom {
         margin-bottom: 0;
         bottom: 0;
-        position: fixed;
+        position: absolute;
         width: 100%;
-        height: 50px;
     }
 
     body {
@@ -144,6 +143,22 @@
         var renzoku_hantei_y = -1;
         var saisei_doremi = [];
         var saisei_flag=false;
+
+        window.addEventListener("orientationchange", function(){
+            var deg;
+            switch (window.orientation) {
+                case -90:
+                    deg = 90;  break;
+                case 0:
+                    deg = 0;   break;
+                case 90:
+                    deg = -90; break;
+                case 180:
+                    deg = 180; break;
+            }
+            document.documentElement.style.transform = "rotate(" + deg + "deg)";
+        }, false);
+
         function setup() {
             var ua = navigator.userAgent;
             if(ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0){
@@ -529,17 +544,17 @@
   </head>
   <body onload="loadProcessor()">
     <div class="top-bar">
-        <span class="top_center_text button" style="width: 50%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" onclick="var str = window.prompt('曲名を入力してください',''); if(str != '' && str != null)document.getElementsByClassName('top_center_text')[0].innerHTML=escape_html(str);">タイトル</span>
-        <a href="#" id="next" class="button" onclick="page_next()" style="float: right">＞</a>
-        <a href="#" id="prev" class="button" onclick="page_prev()" style="float: left">＜</a>                
+        <span class="top_center_text button large" style="width: 50%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" onclick="var str = window.prompt('曲名を入力してください',''); if(str != '' && str != null)document.getElementsByClassName('top_center_text')[0].innerHTML=escape_html(str);">タイトル</span>
+        <a href="#" id="next" class="button large" onclick="page_next()" style="float: right">＞</a>
+        <a href="#" id="prev" class="button large" onclick="page_prev()" style="float: left">＜</a>                
     </div>
 
     <div class="top-bar bottom">
-        <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
+        <a href="#" id="saisei" class="button large" onclick="music_play()">再生</a>
         <input type="range" id="speed" step="1" min="100" max="1000">
-        <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">楽器作成</a>
-        <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">共有</a>                
-        <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
+        <a href="#" id="gakuhumake" class="button large" onclick="tukeru_kesu()">楽器</a>
+        <a href="#" id="kyouyuu" class="button large" onclick="kyouyuu()">共有</a>                
+        <a href="#" id="daunroad large" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
     </div>
     <script>
         function escape_html(string) {
