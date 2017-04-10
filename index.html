@@ -214,9 +214,6 @@
                     }
                 } 
             }
-            audio[7].pause();
-            audio[7].currentTime = 0;
-            audio[7].play();                    
         }
         
 
@@ -243,6 +240,11 @@
         }
 
         function draw() {
+            if(frameCount == 100){
+                audio[7].pause();
+                audio[7].currentTime = 0;
+                audio[7].play();                    
+            }
             //document.getElementById("statusbuttons").children[2];
             background(241,240,238);
             fill(255,212,100);
