@@ -151,11 +151,11 @@
                 kousi_h = 8;
             }else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
                 //alert("タブレット");
-                kousi_w = 5;
+                kousi_w = 9;
                 kousi_h = 8;
             }else{
                 //alert("PC");
-                kousi_w = 5;
+                kousi_w = 9;
                 kousi_h = 8;
             }
             for(var i=0; i<18+(9-kousi_w); i++){
@@ -212,7 +212,7 @@
                     for(var i=1; i<13; i++){
                         if(result[i+5] != "")gakuhu[i][result[i+5]][4] = true;
                     }
-                }                                
+                } 
             }
         }
         
@@ -306,6 +306,9 @@
                             if(mouseX >= (width/kousi_w)*x && mouseX <= (width/kousi_w)*(x+1)){
                                 if(!gakuhu[page][y][x])for(var i=0; i<kousi_h; i++)gakuhu[page][i][x] = false;                            
                                 gakuhu[page][y][x] = !gakuhu[page][y][x];
+                                alert(page);
+                                alert(y);
+                                alert(x);                                                                
                                 if(gakuhu[page][y][x]){
                                     audio[y].currentTime = 0;
                                     audio[y].play();
