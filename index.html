@@ -214,6 +214,9 @@
                     }
                 } 
             }
+            audio[7].pause();
+            audio[7].currentTime = 0;
+            audio[7].play();                    
         }
         
 
@@ -299,11 +302,6 @@
 
         //譜面入力
         function mouseClicked() {
-            for(var i=0; i<audio.length; i++){
-                audio[i].pause();
-                audio[i].currentTime = 0;
-                audio[i].play();                    
-            }            
             if(!mouseDragged_flag && !saisei_flag){
                 for(var y=0; y<kousi_h; y++){
                     for(var x=1; x<kousi_w; x++){
