@@ -306,9 +306,6 @@
                             if(mouseX >= (width/kousi_w)*x && mouseX <= (width/kousi_w)*(x+1)){
                                 if(!gakuhu[page][y][x])for(var i=0; i<kousi_h; i++)gakuhu[page][i][x] = false;                            
                                 gakuhu[page][y][x] = !gakuhu[page][y][x];
-                                alert(page);
-                                alert(y);
-                                alert(x);                                                                
                                 if(gakuhu[page][y][x]){
                                     audio[y].currentTime = 0;
                                     audio[y].play();
@@ -362,6 +359,7 @@
                 }
                 if(page != 17){
                     for(var y=0; y<kousi_h; y++){
+                        alert(gakuhu[page-1][y][1]);
                         if(gakuhu[page-1][y][1]){
                             audio[y].pause();
                             audio[y].currentTime = 0;
