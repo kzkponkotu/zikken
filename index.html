@@ -562,9 +562,10 @@
                     else urladd += '&o=';
                 }
             }
+            window.location.href = "https://twitter.com/intent/tweet?text=" + "「" + document.getElementsByClassName('top_center_text')[0].innerHTML + "」を作曲しました。&url=" + urladd;
             //alert(urladd);
-            ClipboardSetData(urladd);
-            alert("共有リンクをクリップボードにコピーしました。");
+            //ClipboardSetData(urladd);
+            //alert("共有リンクをクリップボードにコピーしました。");
         }
     </script>
   </head>
