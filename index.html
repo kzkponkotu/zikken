@@ -39,7 +39,7 @@
                 clearInterval(kesu);
                 document.getElementById("mokkin_stl").style.display = "";
                 document.getElementById("saisei").style.display = "none";
-                document.getElementById("speed").style.display = "none";
+                document.getElementById("speed_button").style.display = "none";
                 document.getElementById("kyouyuu").style.display = "none";                
                 kidou = false;
             }else{
@@ -48,7 +48,7 @@
                         if(start){                        
                             document.getElementById("mokkin_stl").style.display = "none";
                             document.getElementById("saisei").style.display = "";                            
-                            document.getElementById("speed").style.display = "";                            
+                            document.getElementById("speed_button").style.display = "";                            
                             document.getElementById("kyouyuu").style.display = "";                            
                             kidou = true;
                         }
@@ -198,7 +198,7 @@
                 }
                 if(parameters.length == 18 && kousi_w == 9){
                     document.getElementsByClassName('top_center_text')[0].innerHTML = result[0];
-                    document.getElementById("speed").value = result[1];
+                    document.getElementById('speed').innerHTML = result[1];
                     for(var i=2; i<10; i++){
                         if(result[i] != "")gakuhu[0][result[i]][i-1] = true;
                     }
@@ -209,7 +209,7 @@
                 }
                 if(parameters.length == 18 && kousi_w == 5){
                     document.getElementsByClassName('top_center_text')[0].innerHTML = result[0];
-                    document.getElementById("speed").value = result[1];
+                    document.getElementById('speed').innerHTML = result[1];
                     for(var i=2; i<6; i++){
                         if(result[i] != "")gakuhu[0][result[i]][i-1] = true;
                     }
@@ -396,7 +396,7 @@
             */
             num++;
             if(page < 17){
-                musicplayer = setTimeout(function() {_music_play(num);}, 1100 - document.getElementById("speed").value );
+                musicplayer = setTimeout(function() {_music_play(num);},60000/document.getElementById('speed').innerHTML );
             }else{
                 saisei_flag = false;
                 page=0;
@@ -511,7 +511,7 @@
         function kyouyuu(){
              var urladd = location.protocol + '//' + location.host + location.pathname + '?' +
             'n=' + document.getElementsByClassName('top_center_text')[0].innerHTML +
-            '&s=' + document.getElementById("speed").value;
+            '&s=' + document.getElementById('speed').innerHTML;
             var i=0;            
             for(var j=1; j<9; j++){
                 i=0;
@@ -537,14 +537,14 @@
   </head>
   <body onload="loadProcessor()">
     <div class="top-bar" style="position: absolute;top: 0;">
-        <span class="top_center_text button" style="width: 50%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" onclick="var str = window.prompt('曲名を入力してください',''); if(str != '' && str != null)document.getElementsByClassName('top_center_text')[0].innerHTML=escape_html(str);">タイトル</span>
+        <span class="top_center_text button" style="width: 50%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" onclick="var str = window.prompt('曲名を入力してください',''); if(str != '' && str != null)document.getElementsByClassName('top_center_text')[0].innerHTML=escape_html(str);">名称未設定</span>
         <a href="#" id="next" class="button" onclick="page_next()" style="float: right">＞</a>
         <a href="#" id="prev" class="button" onclick="page_prev()" style="float: left">＜</a>                
     </div>
 
     <div class="top-bar bottom">
         <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
-        <input type="range" id="speed" step="1" min="100" max="1000">
+        <a href="#" id="speed_button" class="button" onclick="var bpm = window.prompt('BPMを入力してください',''); if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
         <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">楽器</a>
         <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">共有</a>                
         <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
@@ -587,7 +587,7 @@
                 itidodake = false;
                 //document.getElementById("daunroad").href = document.getElementsByClassName("downloadOutputFileLink")[0].href;
             }else{
-                document.getElementById("daunroad").innerHTML = "ダウンロード";                
+                document.getElementById("daunroad").innerHTML = "ダウンロード";
             }
         },0);
         function ClipboardSetData(data){
