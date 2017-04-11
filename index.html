@@ -149,23 +149,27 @@
         var renzoku_hantei_y = -1;
         var saisei_doremi = [];
         var saisei_flag=false;
+        var oto_genkai = 17;
 
         function setup() {
             var ua = navigator.userAgent;
             if(ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0){
                 //alert("スマホ");
+                oto_genkai = 9;
                 kousi_w = 9;
                 kousi_h = 8;
             }else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
                 //alert("タブレット");
+                oto_genkai = 9;
                 kousi_w = 9;
                 kousi_h = 8;
             }else{
                 //alert("PC");
-                kousi_w = 18;
+                oto_genkai = 17;
+                kousi_w = 17;
                 kousi_h = 8;
             }
-            for(var i=0; i<18+(9-kousi_w); i++){
+            for(var i=0; i<18+(oto_genkai-kousi_w); i++){
                 gakuhu[i] = [];            
                 saisei_doremi[i] = [];
             }
@@ -200,6 +204,13 @@
 
                     result[i] = paramValue;
                 }
+                if(parameters.length == 18 && kousi_w == 17){
+                    document.getElementsByClassName('top_center_text')[0].innerHTML = result[0];
+                    document.getElementById('speed').innerHTML = result[1];
+                    for(var i=2; i<kousi_w+1; i++){
+                        if(result[i] != "")gakuhu[0][result[i]][i-1] = true;
+                    }
+                }                
                 if(parameters.length == 18 && kousi_w == 9){
                     document.getElementsByClassName('top_center_text')[0].innerHTML = result[0];
                     document.getElementById('speed').innerHTML = result[1];
@@ -523,24 +534,35 @@
         function kyouyuu(){
              var urladd = location.protocol + '//' + location.host + location.pathname + '?' +
             'n=' + document.getElementsByClassName('top_center_text')[0].innerHTML +
-            '&s=' + document.getElementById('speed').innerHTML;
-            var i=0;            
-            for(var j=1; j<9; j++){
-                i=0;
-                for(i; i<8; i++){
-                    if(gakuhu[0][i][j])break;
+            '&s=' + document.getElementById('speed').innerHTML.replace(/[^0-9^\.]/g,"");
+            var i=0;
+            if(oto_genkai != 17){
+                for(var j=1; j<9; j++){
+                    i=0;
+                    for(i; i<8; i++){
+                        if(gakuhu[0][i][j])break;
+                    }
+                    if(i!=8)urladd += '&o=' + i;
+                    else urladd += '&o=';
                 }
-                if(i!=8)urladd += '&o=' + i;
-                else urladd += '&o=';
+                for(var j=1; j<9; j++){
+                    i=0;
+                    for(i; i<8; i++){
+                        if(gakuhu[j][i][8])break;
+                    }
+                    if(i!=8)urladd += '&o=' + i;
+                    else urladd += '&o=';
+                }
+            }else{
+                for(var j=1; j<oto_genkai; j++){
+                    i=0;
+                    for(i; i<8; i++){
+                        if(gakuhu[0][i][j])break;
+                    }
+                    if(i!=8)urladd += '&o=' + i;
+                    else urladd += '&o=';
+                }
             }
-            for(var j=1; j<9; j++){
-                i=0;
-                for(i; i<8; i++){
-                    if(gakuhu[j][i][8])break;
-                }
-                if(i!=8)urladd += '&o=' + i;
-                else urladd += '&o=';
-            }            
             //alert(urladd);
             ClipboardSetData(urladd);
             alert("共有リンクをクリップボードにコピーしました。");
