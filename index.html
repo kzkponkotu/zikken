@@ -14,26 +14,10 @@
     <script src="openscad.js?0.5.2"></script>
     <script src="js/jscad-worker.js?0.5.2" charset="utf-8"></script>
     <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
     <script>
         var itidodake = true;
         var start = false;
         var kidou = false;
-
-        function shorten(url) {
-            return new Promise((resolve, reject) => {
-                gapi.load('client', _ => {
-                gapi.client.init({
-                    'apiKey': 'AIzaSyDH6uww8BXLUn5Sq53-_t0AsLbqf_wx61k',
-                    'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/urlshortener/v1/rest'],
-                })
-                    .then(_ => gapi.client.urlshortener.url.insert({
-                    longUrl: url
-                    }))
-                    .then(resolve, reject)
-                });
-            });
-        }
 
         function zyunbi(){
             itidodake = true;                            
@@ -578,14 +562,7 @@
                     else urladd += '%26o=';
                 }
             }
-            // 短縮URLを取得する
-            shorten(urladd)
-            .then(function(response) {
-                // response.result.id に短縮URLが入っている
-                var shortUrl = response.result.id;
-                alert(shortUrl);
-            });
-            //window.location.href = "https://twitter.com/intent/tweet?text=" + "「" + document.getElementsByClassName('top_center_text')[0].innerHTML + "」を作曲しました。%0a&url=" + urladd + "&hashtags=誰でも演奏できるくん";
+            window.location.href = "https://twitter.com/intent/tweet?text=" + "「" + document.getElementsByClassName('top_center_text')[0].innerHTML + "」を作曲しました。%0a&url=" + urladd + "&hashtags=誰でも演奏できるくん";
             //alert(urladd);
             //ClipboardSetData(urladd);
             //alert("共有リンクをクリップボードにコピーしました。");
