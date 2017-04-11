@@ -579,7 +579,9 @@
             }
             if(document.getElementsByClassName("downloadOutputFileLink")[0].href!="" && itidodake){
                 //document.getElementById("daunroad").innerHTML = "ダウンロード";
+                document.getElementsByClassName("downloadOutputFileLink")[0].download = document.getElementsByClassName("top_center_text button")[0].innerHTML + ".stl";
                 document.getElementsByClassName("downloadOutputFileLink")[0].click();
+
                 itidodake = false;
                 //document.getElementById("daunroad").href = document.getElementsByClassName("downloadOutputFileLink")[0].href;
             }else{
