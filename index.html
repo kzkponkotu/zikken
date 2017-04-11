@@ -14,6 +14,8 @@
     <script src="openscad.js?0.5.2"></script>
     <script src="js/jscad-worker.js?0.5.2" charset="utf-8"></script>
     <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="js/url-shortener.js"></script>    
     <script>
         var itidodake = true;
         var start = false;
@@ -563,10 +565,18 @@
                 }
             }
             //window.location.href = "https://twitter.com/intent/tweet?text=" + "「" + document.getElementsByClassName('top_center_text')[0].innerHTML + "」を作曲しました。%0a&url=" + urladd + "&hashtags=誰でも演奏できるくん";
-            window.location.href = "https://twitter.com/intent/tweet?text=" + urladd + "&hashtags=誰でも演奏できるくん";
+            //window.location.href = "https://twitter.com/intent/tweet?text=" + urladd + "&hashtags=誰でも演奏できるくん";
             //alert(urladd);
             //ClipboardSetData(urladd);
             //alert("共有リンクをクリップボードにコピーしました。");
+            // 短縮URLを取得する
+            shorten(urladd)
+            .then(function(response) {
+                // response.result.id に短縮URLが入っている
+                var shortUrl = response.result.id;
+                // 画面に表示
+                alert(shortUrl);
+            });            
         }
     </script>
   </head>
@@ -579,6 +589,7 @@
 
     <div class="top-bar bottom">
         <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
+          <div id="results"></div>
         <a href="#" id="speed_button" class="button" onclick="var bpm = window.prompt('BPMを入力してください',''); if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
         <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">楽器を作る</a>
         <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">共有</a>                
