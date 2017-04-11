@@ -529,7 +529,9 @@
                 if(i!=8)urladd += '&o=' + i;
                 else urladd += '&o=';
             }            
-            alert(urladd);
+            //alert(urladd);
+            ClipboardSetData(urladd);
+            alert("共有リンクをクリップボードにコピーしました。");
         }
     </script>
   </head>
@@ -587,7 +589,19 @@
             }else{
                 document.getElementById("daunroad").innerHTML = "ダウンロード";                
             }
-        },0); 
+        },0);
+        function ClipboardSetData(data){
+            var body = document.body;
+            if(!body) return false;
+
+            var text_area = document.createElement("textarea");
+            text_area.value = data;
+            body.appendChild(text_area);
+            text_area.select();
+            var result = document.execCommand("copy");
+            body.removeChild(text_area);
+            return result;
+        }        
     </script>
 <div id="mokkin_stl">
     <!-- setup display of the errors as required by OpenJSCAD.js -->
