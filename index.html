@@ -174,9 +174,6 @@
                 saisei_doremi[i] = [];
             }
 
-            createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
-            document.getElementById("defaultCanvas0").style.position = "relative";            
-            document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";
             for(var i=0; i<gakuhu.length; i++){
                 for(var y=0; y<kousi_h; y++){
                     gakuhu[i][y] = [];
@@ -234,6 +231,9 @@
                     }
                 } 
             }
+            createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
+            document.getElementById("defaultCanvas0").style.position = "relative";            
+            document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";
         }
         
 
@@ -262,12 +262,6 @@
         }
 
         function draw() {
-            if(frameCount%60 == 0){
-                createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
-                document.getElementById("defaultCanvas0").style.position = "relative";            
-                document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";
-            }
-
             //document.getElementById("statusbuttons").children[2];
             background(241,240,238);
             fill(255,212,100);
