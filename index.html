@@ -40,7 +40,9 @@
                 document.getElementById("mokkin_stl").style.display = "";
                 document.getElementById("saisei").style.display = "none";
                 document.getElementById("speed_button").style.display = "none";
-                document.getElementById("kyouyuu").style.display = "none";                
+                //document.getElementById("kyouyuu").style.display = "none";
+                document.getElementById("next").style.display = "none";
+                document.getElementById("prev").style.display = "none";                
                 kidou = false;
             }else{
                 kesu =          
@@ -49,7 +51,9 @@
                             document.getElementById("mokkin_stl").style.display = "none";
                             document.getElementById("saisei").style.display = "";                            
                             document.getElementById("speed_button").style.display = "";                            
-                            document.getElementById("kyouyuu").style.display = "";                            
+                            //document.getElementById("kyouyuu").style.display = "";                            
+                            document.getElementById("next").style.display = "";
+                            document.getElementById("prev").style.display = "";                                            
                             kidou = true;
                         }
                     }, 0);
@@ -545,7 +549,7 @@
     <div class="top-bar bottom">
         <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
         <a href="#" id="speed_button" class="button" onclick="var bpm = window.prompt('BPMを入力してください',''); if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
-        <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">楽器</a>
+        <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">STL</a>
         <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">共有</a>                
         <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
     </div>
@@ -576,7 +580,7 @@
                 document.getElementById("gakuhumake").innerHTML = "楽譜";
                 //document.getElementById("daunroad").style.display = "";                
             }else{
-                document.getElementById("gakuhumake").innerHTML = "楽器";                
+                document.getElementById("gakuhumake").innerHTML = "STL";                
                 //document.getElementById("daunroad").style.display = "none";                                
             }
             if(document.getElementsByClassName("downloadOutputFileLink")[0].href!="" && itidodake){
