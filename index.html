@@ -27,7 +27,7 @@
         var kesu =          
             setInterval(function(){            
                 if(start){
-                    document.getElementById("mokkin_stl").style.display = "none";
+                    document.getElementById("mokkin_CAD").style.display = "none";
                     kidou = true;
                 }
             }, 0);
@@ -37,7 +37,7 @@
             if(kidou){
                 mokkin_play();
                 clearInterval(kesu);
-                document.getElementById("mokkin_stl").style.display = "";
+                document.getElementById("mokkin_CAD").style.display = "";
                 document.getElementById("saisei").style.display = "none";
                 document.getElementById("speed_button").style.display = "none";
                 //document.getElementById("kyouyuu").style.display = "none";
@@ -48,7 +48,7 @@
                 kesu =          
                     setInterval(function(){            
                         if(start){                        
-                            document.getElementById("mokkin_stl").style.display = "none";
+                            document.getElementById("mokkin_CAD").style.display = "none";
                             document.getElementById("saisei").style.display = "";                            
                             document.getElementById("speed_button").style.display = "";                            
                             //document.getElementById("kyouyuu").style.display = "";                            
@@ -132,8 +132,8 @@
     </audio>
     <script src="./js/p5.min.js"></script>
     <script>
-        function stl_kirikae(){
-            $('#mokkin_stl').fadeIn(2000);
+        function CAD_kirikae(){
+            $('#mokkin_CAD').fadeIn(2000);
         }    
     </script>
     <script id="gakuhu_make">
@@ -264,8 +264,16 @@
             //縦線
             stroke(18,83,164,255);            
             for(var i=0; i<kousi_w; i++){
+                if((5 - page) == i || (5 - page)+4 == i || (5 - page)+8 == i || (5 - page)+12 == i){
+                    stroke(51,51,51,255);
+                    strokeWeight(2);
+                }else{
+                    stroke(18,83,164,255);
+                    strokeWeight(1);
+                }
                 line((width/kousi_w)*i,0,(width/kousi_w)*i,height);
             }
+            strokeWeight(1);            
             //中央に点
             /*
             fill(18,83,164,255);
@@ -549,7 +557,7 @@
     <div class="top-bar bottom">
         <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
         <a href="#" id="speed_button" class="button" onclick="var bpm = window.prompt('BPMを入力してください',''); if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
-        <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">STL</a>
+        <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">CAD</a>
         <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">共有</a>                
         <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
     </div>
@@ -576,16 +584,16 @@
             else document.getElementById("next").style.visibility="visible";
             if(saisei_flag)document.getElementById("saisei").innerHTML = "停止";
             else document.getElementById("saisei").innerHTML = "再生";
-            if(document.getElementById("mokkin_stl").style.display == ""){
+            if(document.getElementById("mokkin_CAD").style.display == ""){
                 document.getElementById("gakuhumake").innerHTML = "楽譜";
                 //document.getElementById("daunroad").style.display = "";                
             }else{
-                document.getElementById("gakuhumake").innerHTML = "STL";                
+                document.getElementById("gakuhumake").innerHTML = "CAD";                
                 //document.getElementById("daunroad").style.display = "none";                                
             }
             if(document.getElementsByClassName("downloadOutputFileLink")[0].href!="" && itidodake){
                 //document.getElementById("daunroad").innerHTML = "ダウンロード";
-                document.getElementsByClassName("downloadOutputFileLink")[0].download = document.getElementsByClassName("top_center_text button")[0].innerHTML + ".stl";
+                document.getElementsByClassName("downloadOutputFileLink")[0].download = document.getElementsByClassName("top_center_text button")[0].innerHTML + ".CAD";
                 document.getElementsByClassName("downloadOutputFileLink")[0].click();
 
                 itidodake = false;
@@ -607,7 +615,7 @@
             return result;
         }        
     </script>
-<div id="mokkin_stl">
+<div id="mokkin_CAD">
     <!-- setup display of the errors as required by OpenJSCAD.js -->
   <div class="jscad-container">
     <div id="header">
