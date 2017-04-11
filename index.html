@@ -175,7 +175,7 @@
             }
 
             createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
-            document.getElementById("defaultCanvas0").style.position = "relative";            
+            document.getElementById("defaultCanvas0").style.position = "absolute";            
             document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";
             for(var i=0; i<gakuhu.length; i++){
                 for(var y=0; y<kousi_h; y++){
@@ -257,7 +257,7 @@
 
         function windowResized() {
             resizeCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
-            document.getElementById("defaultCanvas0").style.position = "relative";            
+            document.getElementById("defaultCanvas0").style.position = "absolute";            
             document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";
         }
 
