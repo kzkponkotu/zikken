@@ -23,7 +23,8 @@
             resource: {'longUrl': url}
             });
             request.execute(function(response){
-            alert(response.id);
+            //alert(response.id);
+            window.location.href = "https://twitter.com/intent/tweet?url=" + response.id + "&hashtags=誰でも演奏できるくん";
             });
         });
         }
