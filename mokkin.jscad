@@ -6,7 +6,7 @@
 function getParameterDefinitions() {
   return [
     //きらきら星
-    { name: 'onkai', type: 'text', initial: '', caption: '音階' },
+    { name: 'onkai', type: 'text', initial: 'ドドドドドドドドドドドドドドドド', caption: '音階' },
     { name: 'dai_hutosa', type: 'float', initial: 3, caption: '台の太さ(mm)' },
     { name: 'ita_hutosa', type: 'float', initial: 1.5, caption: '鍵盤の板の太さ(mm)' },
     { name: 'ita_sukima', type: 'float', initial: 1, caption: '鍵盤の板の隙間(mm)' },
@@ -75,10 +75,11 @@ function main(p) {
    var start = [];
 
    l.forEach(function(s) {
-        start.push(translate([0,0,0],rectangular_extrude(s, { w:2,h:5,center: true })));
+        start.push(translate([0,0,0],rectangular_extrude(s, { w:3,h:8,center: true })));
    });
+   start = scale(0.6,start);   
    start = rotate([0,0,-80],start);
-   start = start.translate([25,15,0]);
+   start = start.translate([30,12,0]);
    
    o.push(
         difference(
@@ -90,10 +91,11 @@ function main(p) {
    start = [];
 
    l.forEach(function(s) {
-        start.push(translate([0,0,0],rectangular_extrude(s, { w:2,h:5,center: true })));
+        start.push(translate([0,0,0],rectangular_extrude(s, { w:3,h:8,center: true })));
    });
-   start = rotate([0,0,-125],start);
-   start = start.translate([30,-8,0]);
+   start = scale(0.6,start);
+   start = rotate([0,0,-105],start);
+   start = start.translate([32,0,0]);
    
    o.push(
         difference(
