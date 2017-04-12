@@ -289,8 +289,8 @@
 
         function draw() {
             if(frameCount % 30 == 0){
-                document.getElementsByClassName("viewer")[0].children[0].width = window.innerWidth;
-                document.getElementsByClassName("viewer")[0].children[0].height = window.innerHeight;                            
+                document.getElementsByClassName("viewer")[0].children[0].style.width = window.innerWidth + "px";
+                document.getElementsByClassName("viewer")[0].children[0].style.height = window.innerHeight + "px";                            
                 createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
                 document.getElementById("defaultCanvas0").style.position = "relative";            
                 document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";                
