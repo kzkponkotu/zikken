@@ -603,16 +603,16 @@
   <body onload="loadProcessor()">
     <div class="top-bar" style="position: absolute;top: 0;">
         <span class="top_center_text button" style="width: 50%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" onclick="var str = window.prompt('曲名を入力してください',''); if(str != '' && str != null)document.getElementsByClassName('top_center_text')[0].innerHTML=escape_html(str);">名称未設定</span>
-        <a href="#" id="next" class="button" onclick="page_next()" style="float: right">＞</a>
-        <a href="#" id="prev" class="button" onclick="page_prev()" style="float: left">＜</a>                
+        <a href="#" id="next" class="button small" onclick="page_next()" style="float: right">＞</a>
+        <a href="#" id="prev" class="button small" onclick="page_prev()" style="float: left">＜</a>                
     </div>
 
     <div class="top-bar bottom">
-        <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
-        <a href="#" id="speed_button" class="button" onclick="var bpm = window.prompt('BPMを入力してください(半角数字)',''); bpm = escape_html(bpm); if(bpm.match(/[^0-9]+/))bpm = null; if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
-        <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">楽器を作る</a>
-        <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">ツイート</a>                
-        <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
+        <a href="#" id="saisei" class="button small" onclick="music_play()">再生</a>
+        <a href="#" id="speed_button" class="button small" onclick="var bpm = window.prompt('BPMを入力してください(半角数字)',''); bpm = escape_html(bpm); if(bpm.match(/[^0-9]+/))bpm = null; if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
+        <a href="#" id="gakuhumake" class="button small" onclick="tukeru_kesu()">楽器を作る</a>
+        <a href="#" id="kyouyuu" class="button small" onclick="kyouyuu()">ツイート</a>                
+        <a href="#" id="daunroad" class="button small" onclick="zyunbi()" style="display: none;">ダウンロード</a>
     </div>
     <script>
         /*
