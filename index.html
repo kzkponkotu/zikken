@@ -16,6 +16,10 @@
     <script src="js/jscad-function.js?0.5.2" charset="utf-8"></script>
     <script src="https://apis.google.com/js/client.js?onload=load"></script>
     <script>
+        window.onorientationchange = function () {
+            while(window.orientation != -90)alert("画面を縦にしてください。");
+        }
+
         function short_url(url) {
         gapi.client.setApiKey("AIzaSyBZ94AulTbWTf00XZZ8qn9s6e5HHDseFJg");
         gapi.client.load("urlshortener", "v1",　function(){
