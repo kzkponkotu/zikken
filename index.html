@@ -547,7 +547,7 @@
         function kyouyuu(){
              var urladd = location.protocol + '//' + location.host + location.pathname + '?' +
             'n=' + document.getElementsByClassName('top_center_text')[0].innerHTML +
-            '%26s=' + document.getElementById('speed').innerHTML.replace(/[^0-9^\.]/g,"");
+            '&s=' + document.getElementById('speed').innerHTML.replace(/[^0-9^\.]/g,"");
             var i=0;
             if(oto_genkai != 17){
                 for(var j=1; j<9; j++){
@@ -555,16 +555,16 @@
                     for(i; i<8; i++){
                         if(gakuhu[0][i][j])break;
                     }
-                    if(i!=8)urladd += '%26o=' + i;
-                    else urladd += '%26o=';
+                    if(i!=8)urladd += '&o=' + i;
+                    else urladd += '&o=';
                 }
                 for(var j=1; j<9; j++){
                     i=0;
                     for(i; i<8; i++){
                         if(gakuhu[j][i][8])break;
                     }
-                    if(i!=8)urladd += '%26o=' + i;
-                    else urladd += '%26o=';
+                    if(i!=8)urladd += '&o=' + i;
+                    else urladd += '&o=';
                 }
             }else{
                 for(var j=1; j<oto_genkai; j++){
@@ -572,8 +572,8 @@
                     for(i; i<8; i++){
                         if(gakuhu[0][i][j])break;
                     }
-                    if(i!=8)urladd += '%26o=' + i;
-                    else urladd += '%26o=';
+                    if(i!=8)urladd += '&o=' + i;
+                    else urladd += '&o=';
                 }
             }
             //window.location.href = "https://twitter.com/intent/tweet?text=" + "「" + document.getElementsByClassName('top_center_text')[0].innerHTML + "」を作曲しました。%0a&url=" + urladd + "&hashtags=誰でも演奏できるくん";
