@@ -6,7 +6,7 @@
 function getParameterDefinitions() {
   return [
     //きらきら星
-    { name: 'onkai', type: 'text', initial: 'ドドドドドドドドドドドドドドドド', caption: '音階' },
+    { name: 'onkai', type: 'text', initial: '', caption: '音階' },
     { name: 'dai_hutosa', type: 'float', initial: 3, caption: '台の太さ(mm)' },
     { name: 'ita_hutosa', type: 'float', initial: 1.5, caption: '鍵盤の板の太さ(mm)' },
     { name: 'ita_sukima', type: 'float', initial: 1, caption: '鍵盤の板の隙間(mm)' },
@@ -87,22 +87,37 @@ function main(p) {
         ).subtract(o)
     );
 
-   l = vector_text(0,0,"e");
+   l = vector_text(0,0,"<");
    start = [];
 
    l.forEach(function(s) {
         start.push(translate([0,0,0],rectangular_extrude(s, { w:3,h:8,center: true })));
    });
    start = scale(0.6,start);
-   start = rotate([0,0,-105],start);
-   start = start.translate([32,0,0]);
+   start = rotate([0,0,-20],start);
+   start = start.translate([10,28,0]);
    
    o.push(
         difference(
             start
         ).subtract(o)
     );
+    
+   l = vector_text(0,0,")");
+   start = [];
 
+   l.forEach(function(s) {
+        start.push(translate([0,0,0],rectangular_extrude(s, { w:3,h:8,center: true })));
+   });
+   start = scale(0.6,start);
+   start = rotate([0,0,40],start);
+   start = start.translate([30,17,0]);
+   
+   o.push(
+        difference(
+            start
+        ).subtract(o)
+    );    
 
     return union(o);
 }
