@@ -78,6 +78,11 @@
     </script>
     <link rel="stylesheet" href="css/foundation.css">
     <style>
+    .cover{
+        position: relative;
+        left: 50%;
+    }
+
     .top_center_text {
         font-weight: bold;
         line-height: 1;
@@ -288,9 +293,16 @@
         }
 
         function draw() {
+            ///document.getElementsByClassName("viewer")[0].children[0].style.marginLeft = -window.screen.width/2 + "px";
+            /*
+            if(document.getElementById("mokkin_stl").style.display == ""){
+                document.getElementsByClassName("viewer")[0].children[0].width = window.innerWidth;
+                document.getElementsByClassName("viewer")[0].children[0].height = window.innerHeight;            
+            }*/
             if(frameCount % 30 == 0){
-                //document.getElementsByClassName("viewer")[0].children[0].style.width = window.innerWidth + "px";
-                //document.getElementsByClassName("viewer")[0].children[0].style.height = window.innerHeight + "px";                            
+                //document.getElementsByClassName("viewer")[0].children[0].classList.add("cover");
+                //document.getElementsByClassName("viewer")[0].children[0].width = window.innerWidth;
+                //document.getElementsByClassName("viewer")[0].children[0].height = window.innerHeight;                        
                 createCanvas(windowWidth,windowHeight - (document.getElementsByClassName("top-bar")[0].clientHeight + document.getElementsByClassName("top-bar")[1].clientHeight));
                 document.getElementById("defaultCanvas0").style.position = "relative";            
                 document.getElementById("defaultCanvas0").style.top = document.getElementsByClassName("top-bar")[0].clientHeight + "px";                
@@ -536,6 +548,7 @@
                 saisei_flag = false;
                 page=0;
                 document.getElementsByName( "onkai" )[0].value = renzoku;
+                document.getElementsByName( "bpm" )[0].value = document.getElementById('speed').innerHTML.replace(/[^0-9^\.]/g,"");
                 document.getElementById('updateButton').click();
             }
         }
