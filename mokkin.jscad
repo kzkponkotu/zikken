@@ -10,6 +10,7 @@ function getParameterDefinitions() {
     { name: 'dai_hutosa', type: 'float', initial: 3, caption: '台の太さ(mm)' },
     { name: 'ita_hutosa', type: 'float', initial: 1.5, caption: '鍵盤の板の太さ(mm)' },
     { name: 'ita_sukima', type: 'float', initial: 1, caption: '鍵盤の板の隙間(mm)' },
+    { name: 'bpm', type: 'int', initial: 1, caption: 'bpm' },    
     ];
 }
 
@@ -112,6 +113,22 @@ function main(p) {
    start = scale(0.6,start);
    start = rotate([0,0,40],start);
    start = start.translate([30,17,0]);
+   
+   o.push(
+        difference(
+            start
+        ).subtract(o)
+    );
+    
+   l = vector_text(0,0,p.bpm + "bpm");
+   start = [];
+
+   l.forEach(function(s) {
+        start.push(translate([0,0,0],rectangular_extrude(s, { w:3.3,h:8.8,center: true })));
+   });
+   start = scale(0.5,start);
+   start = rotate([0,0,-90],start);
+   start = start.translate([-25,32,0]);
    
    o.push(
         difference(
