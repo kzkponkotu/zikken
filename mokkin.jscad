@@ -10,7 +10,7 @@ function getParameterDefinitions() {
     { name: 'dai_hutosa', type: 'float', initial: 3, caption: '台の太さ(mm)' },
     { name: 'ita_hutosa', type: 'float', initial: 1.5, caption: '鍵盤の板の太さ(mm)' },
     { name: 'ita_sukima', type: 'float', initial: 1, caption: '鍵盤の板の隙間(mm)' },
-    { name: 'bpm', type: 'int', initial: 1, caption: 'bpm' },    
+    { name: 'bpm', type: 'int', initial: 120, caption: 'bpm' },    
     ];
 }
 
