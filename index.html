@@ -110,7 +110,7 @@
     .top-bar {
        position: fixed;
        text-align: center;        
-       background-color: #333333;
+       background-color: #5b5b5b;
        color: #F1F0EE;
        width: 100%;
     }
@@ -119,8 +119,11 @@
        color: #F1F0EE;       
     }
     .button {
-        background-color: #1253A4;
+        background-color: #d685b0;
         color: #F1F0EE;
+    }
+    .button:hover {
+        background-color: #d685b0;
     }
     span {
        background-color: #333333;        
@@ -313,21 +316,21 @@
             }
             //document.getElementById("statusbuttons").children[2];
             background(241,240,238);
-            fill(255,212,100);
+            fill(179,211,172);
             rect(0,0,(width/kousi_w),height);
             //stroke(18,83,164,255);
             //横線
-            stroke(18,83,164,255*0.3);            
+            stroke(86,167,100,255*0.3);            
             for(var i=0; i<kousi_h; i++){
                 line(0,(height/kousi_h)*i,width,(height/kousi_h)*i);
             }
             //縦線
-            stroke(18,83,164,255);            
+            stroke(86,167,100);            
             for(var i=0; i<kousi_w; i++){
                 if((5 - page) == i || (5 - page)+4 == i || (5 - page)+8 == i || (5 - page)+12 == i){
-                    stroke(51,51,51,255);
+                    stroke(91,91,91);
                 }else{
-                    stroke(18,83,164,255);
+                    stroke(179,211,172);
                 }
                 line((width/kousi_w)*i,0,(width/kousi_w)*i,height);
             }
@@ -345,7 +348,7 @@
             //赤い四角とドレミファソラシドを書くよ
             for(var y=0; y<kousi_h; y++){
                 for(var x=0; x<kousi_w; x++){
-                    fill(51,51,51,255);
+                    fill(255,255,255,255);
                     noStroke();
                     if(x == 0){
                         var tiisaaihou1,tiisaaihou2,tiisize;
@@ -362,7 +365,7 @@
                         text(doremi[y],(width/kousi_w)*x + ((width/kousi_w)/2)-(tiisize),(height/kousi_h)*(y+1) - (((height/kousi_h)-(tiisize*0.5))*0.5));
                     }else{
                         if(gakuhu[page][y][x]){
-                            fill(242,105,100);
+                            fill(228,173,109);
                             noStroke();
                             if(saisei_flag && page + x > 16)fill(0,0,0);
                             //triangle((width/kousi_w)*x,(height/kousi_h)*y,(width/kousi_w)*x + (width/kousi_w),(height/kousi_h)*y,((width/kousi_w)*x + (width/kousi_w))/2,((height/kousi_h)*y + (height/kousi_h)/2));
