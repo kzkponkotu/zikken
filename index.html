@@ -641,7 +641,7 @@
     </div>
     <div class="top-bar bottom">
         <a href="#" id="saisei" class="button" onclick="music_play()">再生</a>
-        <a href="#" id="speed_button" class="button" onclick="var bpm = window.prompt('BPMを入力してください(半角数字)',''); bpm = escape_html(bpm); if(bpm.match(/[^0-9]+/))bpm = null; if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
+        <a href="#" id="speed_button" class="button" onclick="var bpm = window.prompt('BPMを入力してください(半角数字)',''); bpm = escape_html(bpm); if(bpm.match(/[^0-9]+/)){bpm = null; alert('半角数字を入力してください');} if(bpm != '' && bpm != null)document.getElementById('speed').innerHTML = bpm;">BPM:<span id="speed" style="background-color: rgba(0,0,0,0);">120<span></a>
         <a href="#" id="gakuhumake" class="button" onclick="tukeru_kesu()">楽器を作る</a>
         <a href="#" id="kyouyuu" class="button" onclick="kyouyuu()">ツイート</a>                
         <a href="#" id="daunroad" class="button" onclick="zyunbi()" style="display: none;">ダウンロード</a>
