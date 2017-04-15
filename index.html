@@ -367,7 +367,7 @@
                         if(gakuhu[page][y][x]){
                             fill(228,173,109);
                             noStroke();
-                            if(saisei_flag && page + x > 16)fill(0,0,0);
+                            if(saisei_flag && page + x > 16)fill(111,111,111);
                             //triangle((width/kousi_w)*x,(height/kousi_h)*y,(width/kousi_w)*x + (width/kousi_w),(height/kousi_h)*y,((width/kousi_w)*x + (width/kousi_w))/2,((height/kousi_h)*y + (height/kousi_h)/2));
                             //ellipse((width/kousi_w)*x-((width/kousi_w)/2),(height/kousi_h)*y-((height/kousi_h)/2),100,100);
                             rect((width/kousi_w)*x,(height/kousi_h)*y,(width/kousi_w),(height/kousi_h));
@@ -684,8 +684,21 @@
             else document.getElementById("prev").style.visibility="visible";
             if(page>=8+(9-kousi_w))document.getElementById("next").style.visibility="hidden";
             else document.getElementById("next").style.visibility="visible";
-            if(saisei_flag)document.getElementById("saisei").innerHTML = "停止";
-            else document.getElementById("saisei").innerHTML = "再生";
+            if(saisei_flag){
+                document.getElementById("saisei").innerHTML = "停止";
+                document.getElementById("speed_button").style.visibility="hidden";
+                document.getElementById("kyouyuu").style.visibility="hidden";              
+                document.getElementById("gakuhumake").style.visibility="hidden";
+                document.getElementById("next").style.visibility="hidden";              
+                document.getElementById("prev").style.visibility="hidden";                
+            }else{
+                document.getElementById("saisei").innerHTML = "再生";
+                document.getElementById("speed_button").style.visibility="visible";
+                document.getElementById("kyouyuu").style.visibility="visible";              
+                document.getElementById("gakuhumake").style.visibility="visible";                
+                document.getElementById("next").style.visibility="visible";              
+                document.getElementById("prev").style.visibility="visible";                                
+            }
             if(document.getElementById("mokkin_stl").style.display == ""){
                 document.getElementById("gakuhumake").innerHTML = "編集画面に戻る";
                 document.getElementById("gakuhumake").style.background = "#d685b0";
