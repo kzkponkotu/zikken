@@ -233,8 +233,12 @@ OpenJsCad.Viewer = function(containerelement,options) {
   };
 
   this.gl.resizeCanvas = function() {
+    /*
     var canvasWidth  = _this.gl.canvas.clientWidth;
     var canvasHeight = _this.gl.canvas.clientHeight;
+    */
+    var canvasWidth  = window.innerWidth;
+    var canvasHeight = window.innerHeight;    
     if (_this.gl.canvas.width  != canvasWidth ||
         _this.gl.canvas.height != canvasHeight) {
       _this.gl.canvas.width  = canvasWidth;
