@@ -677,6 +677,9 @@
             });
         }
         setInterval(function(){
+            document.getElementById("saisei").style.background = "#d685b0";
+            document.getElementById("speed_button").style.background = "#d685b0";
+            document.getElementById("kyouyuu").style.background = "#d685b0";
             if(page<=0)document.getElementById("prev").style.visibility="hidden";
             else document.getElementById("prev").style.visibility="visible";
             if(page>=8+(9-kousi_w))document.getElementById("next").style.visibility="hidden";
