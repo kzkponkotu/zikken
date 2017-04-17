@@ -8,9 +8,8 @@ function getParameterDefinitions() {
     //きらきら星
     { name: 'onkai', type: 'text', initial: '', caption: '音階' },
     { name: 'dai_hutosa', type: 'float', initial: 3, caption: '台の太さ(mm)' },
-    { name: 'ita_hutosa', type: 'float', initial: 1.5, caption: '鍵盤の板の太さ(mm)' },
+    { name: 'ita_hutosa', type: 'float', initial: 2, caption: '鍵盤の板の太さ(mm)' },
     { name: 'ita_sukima', type: 'float', initial: 1, caption: '鍵盤の板の隙間(mm)' },
-    { name: 'bpm', type: 'int', initial: 120, caption: 'bpm' },    
     ];
 }
 
@@ -120,6 +119,7 @@ function main(p) {
         ).subtract(o)
     );
     
+/*
    l = vector_text(0,0,p.bpm + "bpm");
    start = [];
 
@@ -129,10 +129,11 @@ function main(p) {
    start = scale(0.5,start);
    start = rotate([0,0,-90],start);
    start = start.translate([-25,32,0]);
-   
+ */
+
    o.push(
         difference(
-            start
+            cube({size: [15,60,2]}).translate([-30,-30,2])
         ).subtract(o)
     );    
 
