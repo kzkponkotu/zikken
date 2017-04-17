@@ -136,6 +136,26 @@ function main(p) {
             cube({size: [15,60,2]}).translate([-30,-30,2])
         ).subtract(o)
     );    
+    
+    var ita_hame = cube({size: [24,6,20]}).translate([-5,-20,2]);
+    var ita = cube({size: [20,40,2]}).translate([60,-20,0]);
+    
+    ita_hame = difference(
+        ita_hame,
+        cube({size: [20,2.5,40]}).translate([-3,-18.25,2])
+    );
+
+   o.push(
+        difference(
+            ita_hame
+        ).subtract(o)
+    );    
+
+   o.push(
+        difference(
+            ita
+        ).subtract(o)
+    );
 
     return union(o);
 }
