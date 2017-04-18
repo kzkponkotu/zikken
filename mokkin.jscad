@@ -142,20 +142,12 @@ function main(p) {
     
     ita_hame = difference(
         ita_hame,
-        cube({size: [20,2.5,40]}).translate([-3,-18.25,2])
+        cube({size: [20.3,2.3,40]}).translate([-3.15,-18.15,2])
     );
 
    o.push(
-        difference(
-            ita_hame
-        ).subtract(o)
+        ita,ita_hame
     );    
-
-   o.push(
-        difference(
-            ita
-        ).subtract(o)
-    );
 
     return union(o);
 }
